@@ -18,13 +18,13 @@ def robot_pembersih(df):
     
     return df_akhir
 
-sumber_data = sqlite3.connect(r"C:\GHOZI'S PROJECT\Data Engineer NEW\File .db\ecommerce_operasional.db")
+sumber_data = sqlite3.connect("ecommerce_operasional.db")
 df = pd.read_sql('SELECT * FROM penjualan_mentah', sumber_data)
 sumber_data.close()
 
 df_bersih = robot_pembersih(df)
 
-data_warehouse = sqlite3.connect(r"C:\GHOZI'S PROJECT\Data Engineer NEW\File .db\Warehouse\ecommerce_analytics.db")
+data_warehouse = sqlite3.connect("ecommerce_analytics.db")
 df_bersih.to_sql("omset_produk_bulanan", data_warehouse, if_exists='replace', index=False)
 data_warehouse.close()
 
