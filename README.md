@@ -1,4 +1,4 @@
-# E-Commerce ETL Pipeline
+<img width="500" height="375" alt="Laporan omset_produk" src="https://github.com/user-attachments/assets/6cbca74a-63a1-4434-8e90-e9d554176cfc" /># E-Commerce ETL Pipeline
 
 Proyek ini adalah sistem otomatisasi data (*Data Pipeline*) skala menengah yang dirancang untuk mensimulasikan proses **ETL (Extract, Transform, Load)** pada data transaksi E-Commerce yang berantakan (*dirty data*). Pipeline ini telah diuji menggunakan **200 baris data simulasi ekstrem** yang penuh dengan duplikat, data bolong, dan anomali teks.
 
@@ -29,7 +29,11 @@ Berhasil mereduksi 200 data mentah yang rusak menjadi laporan keuangan bersih ya
 | **Makanan & Minuman** | 45.560.000 |
 | **Otomotif** | 20.590.000 |
 
+### 📉 Visualisasi Dashboard
+![Dashboard Omset](<img width="500" height="375" alt="Laporan omset_produk" src="https://github.com/user-attachments/assets/470a4bfb-e570-45ad-ab92-1e7cbcd3b24e" />
+)
+
 ## Cara Menjalankan
 Pastikan database sumber sudah terisi, lalu cukup jalankan script utama via terminal laptop Anda:
 ```bash
-python cron_job_omset_bulanan.py
+python cron_job_omset.py
