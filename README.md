@@ -1,34 +1,35 @@
 # E-Commerce ETL Pipeline
 
-Proyek ini adalah sistem otomatisasi data (*Data Pipeline*) sederhana yang dirancang untuk mensimulasikan proses **ETL (Extract, Transform, Load)** pada data transaksi E-Commerce.
+Proyek ini adalah sistem otomatisasi data (*Data Pipeline*) skala menengah yang dirancang untuk mensimulasikan proses **ETL (Extract, Transform, Load)** pada data transaksi E-Commerce yang berantakan (*dirty data*). Pipeline ini telah diuji menggunakan **200 baris data simulasi ekstrem** yang penuh dengan duplikat, data bolong, dan anomali teks.
 
 ## Tech Stack yang Digunakan
 * **Python 3**
-* **Pandas** (Untuk proses *Transformation* dan *Data Cleaning*)
+* **Pandas** (Untuk manipulasi data, agregasi, dan *Data Cleaning*)
 * **SQLite3** (Sebagai database operasional sumber dan target *Data Warehouse*)
 
 ## Alur Kerja Pipeline (ETL)
-1. **Extract**: Robot menyedot data transaksi mentah harian dari database kasir toko (`ecommerce_operasional.db`).
-2. **Transform**: 
-   * Menghapus transaksi duplikat permanen.
-   * Membersihkan spasi gaib dan merapikan teks kategori produk menjadi *Title Case*.
-   * Mengamankan data dari sistem error (menyaring harga produk yang bernilai minus).
-   * Mengisi data bolong (*missing values*) pada jumlah item secara otomatis.
-   * Membuat kolom kalkulasi baru berupa `total_pendapatan`.
-3. **Load**: Menyimpan hasil agregasi omset bersih ke dalam tabel warehouse (`omset_produk`) untuk siap dikonsumsi oleh tim bisnis.
+1. **Extract**: Robot mengambil data transaksi mentah bulanan dari database operasional toko (`ecommerce_operasional.db`).
+2. **Transform (Pembersihan Tingkat Lanjut)**: 
+   * **Deduplication**: Menghapus transaksi duplikat permanen secara aman menggunakan `.copy()`.
+   * **Text Standardization**: Membersihkan spasi gaib (*whitespace*) dan memaksa semua format teks menjadi *Title Case*.
+   * **Data Mapping**: Menyelaraskan data singkatan yang berantakan (mengubah `Mamin` otomatis menjadi `Makanan & Minuman`, dan `Oto` menjadi `Otomotif`) menggunakan kamus pemetaan Pandas.
+   * **Handling Missing Values**: Mengamankan data bolong (*NaN*) dengan mengisi nilai default (Item diisi `1`, Harga diisi `0`).
+   * **Anomaly Filtering**: Membuang data cacat sistem yang memiliki harga di bawah atau sama dengan 0.
+   * **Feature Engineering**: Membuat kolom kalkulasi baru berupa `total_pendapatan` ($jumlah\_item \times harga\_satuan$).
+3. **Load**: Melakukan agregasi (*Group By*) untuk merangkum total omset bersih per kategori, lalu menyimpannya ke tabel *Data Warehouse* (`omset_produk_bulanan`) di database `ecommerce_analytics.db`.
 
-## Contoh Data yang Diproses
+## Hasil Uji Coba (200 Data Pasca ETL)
 
-**Data Mentah (Source):**
-* TX-001 | Elektronik | 1 | 5000000 (Duplikat)
-* TX-005 | Fashion | 1 | -50000 (Harga Minus/Error)
-* TX-006 | elektronik | 1 | 1200000 (Typo Huruf Kecil)
+Berhasil mereduksi 200 data mentah yang rusak menjadi laporan keuangan bersih yang dikelompokkan ke dalam 4 kategori utama:
 
-**Hasil Akhir di Warehouse (Target):**
-* Elektronik: 11.950.000
-* Fashion: 650.000
+| Kategori Produk | Total Pendapatan (Rp) |
+| :--- | :--- |
+| **Elektronik** | 66.060.000 |
+| **Fashion** | 31.610.000 |
+| **Makanan & Minuman** | 45.560.000 |
+| **Otomotif** | 20.590.000 |
 
 ## Cara Menjalankan
-Cukup jalankan script utama via terminal laptop Anda:
+Pastikan database sumber sudah terisi, lalu cukup jalankan script utama via terminal laptop Anda:
 ```bash
-python cron_job_omset_mingguan.py
+python etl_portofolio_ghozi.py
