@@ -1,13 +1,13 @@
-# E-Commerce ETL Pipeline
+# 🤖 E-Commerce ETL Pipeline
 
 Proyek ini adalah sistem otomatisasi data (*Data Pipeline*) skala menengah yang dirancang untuk mensimulasikan proses **ETL (Extract, Transform, Load)** pada data transaksi E-Commerce yang berantakan (*dirty data*). Pipeline ini telah diuji menggunakan **200 baris data simulasi ekstrem** yang penuh dengan duplikat, data bolong, dan anomali teks.
 
-## Tech Stack yang Digunakan
+## 🛠️ Tech Stack yang Digunakan
 * **Python 3**
 * **Pandas** (Untuk manipulasi data, agregasi, dan *Data Cleaning*)
 * **SQLite3** (Sebagai database operasional sumber dan target *Data Warehouse*)
 
-## Alur Kerja Pipeline (ETL)
+## ⚙️ Alur Kerja Pipeline (ETL)
 1. **Extract**: Robot mengambil data transaksi mentah bulanan dari database operasional toko (`ecommerce_operasional.db`).
 2. **Transform (Pembersihan Tingkat Lanjut)**: 
    * **Deduplication**: Menghapus transaksi duplikat permanen secara aman menggunakan `.copy()`.
@@ -18,7 +18,7 @@ Proyek ini adalah sistem otomatisasi data (*Data Pipeline*) skala menengah yang 
    * **Feature Engineering**: Membuat kolom kalkulasi baru berupa `total_pendapatan` ($jumlah\_item \times harga\_satuan$).
 3. **Load**: Melakukan agregasi (*Group By*) untuk merangkum total omset bersih per kategori, lalu menyimpannya ke tabel *Data Warehouse* (`omset_produk_bulanan`) di database `ecommerce_analytics.db`.
 
-## Hasil Uji Coba (200 Data Pasca ETL)
+## 📊 Hasil Uji Coba (200 Data Pasca ETL)
 
 Berhasil mereduksi 200 data mentah yang rusak menjadi laporan keuangan bersih yang dikelompokkan ke dalam 4 kategori utama:
 
@@ -31,7 +31,7 @@ Berhasil mereduksi 200 data mentah yang rusak menjadi laporan keuangan bersih ya
 
 ### 📉 Visualisasi Dashboard
 ![Dashboard Omset](https://github.com/user-attachments/assets/56b7e5bb-8433-42d6-8d37-b254ace5539c)
-## Cara Menjalankan
+## 🚀 Cara Menjalankan
 Pastikan database sumber sudah terisi, lalu cukup jalankan script utama via terminal laptop Anda:
 ```bash
 python cron_job_omset.py
