@@ -25,7 +25,10 @@ sumber_data.close()
 df_bersih = robot_pembersih(df)
 
 data_warehouse = sqlite3.connect("ecommerce_analytics.db")
-df_bersih.to_sql("omset_produk_bulanan", data_warehouse, if_exists='replace', index=False)
+df_bersih.to_sql("omset_produk", data_warehouse, if_exists='replace', index=False)
 data_warehouse.close()
 
 print("Pembersihan Sukses...")
+
+df_bersih.to_csv("omset_produk.csv", index=False)
+print("File 'omset_produk.csv' berhasil disimpan")
