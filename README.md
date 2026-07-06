@@ -32,4 +32,4 @@ Berhasil mereduksi 200 data mentah yang rusak menjadi laporan keuangan bersih ya
 ## Cara Menjalankan
 Pastikan database sumber sudah terisi, lalu cukup jalankan script utama via terminal laptop Anda:
 ```bash
-python etl_portofolio_ghozi.py
+python cron_job_omset_bulanan.py
