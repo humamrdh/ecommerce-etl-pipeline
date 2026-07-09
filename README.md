@@ -31,6 +31,12 @@ Berhasil mereduksi 200 data mentah yang rusak menjadi laporan keuangan bersih ya
 
 ### 📉 Visualisasi Dashboard
 ![Dashboard Omset](https://github.com/user-attachments/assets/56b7e5bb-8433-42d6-8d37-b254ace5539c)
+
+## ⏰ Otomatisasi & Penjadwalan (Automation)
+Pipeline ini telah dikonfigurasi untuk berjalan secara otomatis tanpa intervensi manual menggunakan **Task Scheduler / Cron Job**. 
+* **Jadwal Eksekusi:** Setiap hari pukul 00:00 WIB.
+* **Mekanisme:** Pemicu otomatis akan mengeksekusi script Python, membersihkan data transaksi harian baru, memperbarui *Data Warehouse* (`ecommerce_analytics.db`), dan memperbarui file CSV untuk konsumsi *Dashboard Looker Studio*.
+
 ## 🚀 Cara Menjalankan
 Pastikan database sumber sudah terisi, lalu cukup jalankan script utama via terminal laptop Anda:
 ```bash
